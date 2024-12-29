@@ -1,5 +1,12 @@
+import React from 'react';
+import CalendarView from '../components/calendar/CalendarView';
+
 const Calendar = () => {
-    return <h1 className="text-2xl font-bold">Calendar Page</h1>;
-  };
-  
+  return (
+    <div className="space-y-6">
+      <CalendarView />
+    </div>
+  );
+};
+
 export default Calendar;
