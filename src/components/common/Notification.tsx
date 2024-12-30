@@ -1,28 +1,26 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-const Notification = ({
-  message,
-  type = 'success',
-  onClose,
-}: {
+type NotificationProps = {
   message: string;
-  type?: 'success' | 'error';
+  type: 'success' | 'error';
   onClose: () => void;
-}) => {
-  useEffect(() => {
-    const timer = setTimeout(onClose, 3000);
-    return () => clearTimeout(timer);
-  }, [onClose]);
+};
 
+const NotificationPanel: React.FC<NotificationProps> = ({ message, type, onClose }) => {
   return (
     <div
-      className={`fixed top-4 right-4 px-4 py-2 rounded shadow ${
-        type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+      className={`p-2 rounded ${
+        type === 'error'
+          ? 'bg-red-100 text-red-700'
+          : type === 'success'
+          ? 'bg-green-100 text-green-700'
+          : 'bg-yellow-100 text-yellow-700'
       }`}
     >
       {message}
+      <button onClick={onClose}>Close</button>
     </div>
   );
 };
 
-export default Notification;
+export default NotificationPanel;

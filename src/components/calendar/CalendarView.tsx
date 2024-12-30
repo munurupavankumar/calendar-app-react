@@ -1,45 +1,70 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import EventDetails from './EventDetails';
-import Loader from '../common/Loader'; // Import Loader
+import Modal from 'react-modal';
 
 const CalendarView = () => {
-  const [events, setEvents] = useState<{ title: string; date: string }[]>([]);
-  const [selectedEvent, setSelectedEvent] = useState<{ title: string; date: string } | null>(null);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [events, setEvents] = useState<{ title: string; start: string }[]>([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [eventTitle, setEventTitle] = useState<string>('');
 
-  useEffect(() => {
-    // Simulate fetching events
-    setTimeout(() => {
-      setEvents([
-        { title: 'Email to Company A', date: '2024-01-10' },
-        { title: 'LinkedIn Post for Company B', date: '2024-01-12' },
-        { title: 'Phone Call with Company C', date: '2024-01-15' },
-      ]);
-      setLoading(false); // Hide loader after fetching events
-    }, 2000);
-  }, []);
+  const handleDateClick = (info: any) => {
+    if (!showModal) {
+      setSelectedDate(info.dateStr);
+      setEventTitle('');
+      setShowModal(true);
+    }
+  };
+
+  const handleSaveEvent = () => {
+    if (!eventTitle.trim()) {
+      alert('Event title cannot be empty.');
+      return;
+    }
+    setEvents([...events, { title: eventTitle, start: selectedDate! }]);
+    setShowModal(false);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedDate(null);
+  };
 
   const handleEventClick = (info: any) => {
-    setSelectedEvent({ title: info.event.title, date: info.event.startStr });
+    if (window.confirm(`Are you sure you want to delete the event "${info.event.title}"?`)) {
+      const updatedEvents = events.filter((event) => event.title !== info.event.title || event.start !== info.event.startStr);
+      setEvents(updatedEvents);
+    }
   };
 
   return (
     <div className="bg-white p-4 shadow rounded">
       <h1 className="text-xl font-bold mb-4">Calendar</h1>
-      {loading ? (
-        <Loader /> // Show loader while loading events
-      ) : (
-        <FullCalendar
-          plugins={[dayGridPlugin, interactionPlugin]}
-          initialView="dayGridMonth"
-          events={events}
-          eventClick={handleEventClick}
+      <FullCalendar
+        plugins={[dayGridPlugin, interactionPlugin]}
+        initialView="dayGridMonth"
+        events={events}
+        dateClick={handleDateClick}
+        eventClick={handleEventClick}
+        editable={!showModal} 
+      />
+      <Modal
+        isOpen={showModal}
+        onRequestClose={handleCloseModal}
+        contentLabel="Add Event"
+      >
+        <h2>Add Event {selectedDate ? `on ${selectedDate}` : ''}</h2>
+        <input
+          type="text"
+          value={eventTitle}
+          onChange={(e) => setEventTitle(e.target.value)}
+          placeholder="Event Title"
         />
-      )}
-      <EventDetails event={selectedEvent} onClose={() => setSelectedEvent(null)} />
+        <button onClick={handleSaveEvent}>Save</button>
+        <button onClick={handleCloseModal}>Close</button>
+      </Modal>
     </div>
   );
 };

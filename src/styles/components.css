@@ -4,3 +4,42 @@ body {
     color: #1a202c; /* text-gray-900 */
     font-family: sans-serif; /* font-sans */
 }
+
+.ReactModal__Overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Modal Content */
+  .ReactModal__Content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+  }
+  
+  /* Close Button */
+  .ReactModal__Content button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .ReactModal__Content button:first-child {
+    background-color: #4caf50;
+    color: white;
+    margin-right: 10px;
+  }
+  
+  .ReactModal__Content button:last-child {
+    background-color: #f44336;
+    color: white;
+  }
+  

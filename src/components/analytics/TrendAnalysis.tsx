@@ -1,37 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Chart, registerables } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+import { ChartData } from '../../types/common';
 
-// Register required components
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+// Register all necessary Chart.js components
+Chart.register(...registerables);
 
-const TrendAnalysis = () => {
-  const data = {
-    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-    datasets: [
-      {
-        label: 'Communications Sent',
-        data: [5, 10, 7, 15],
-        borderColor: '#4dc9f6',
-        backgroundColor: 'rgba(77, 201, 246, 0.2)',
-      },
-      {
-        label: 'Follow-ups Completed',
-        data: [3, 6, 8, 10],
-        borderColor: '#f67019',
-        backgroundColor: 'rgba(246, 112, 25, 0.2)',
-      },
-    ],
-  };
+type TrendAnalysisProps = {
+  data: ChartData;
+};
+
+const TrendAnalysis: React.FC<TrendAnalysisProps> = ({ data }) => {
+  useEffect(() => {
+    return () => {
+      // Cleanup the chart instance to avoid canvas reuse issues
+      Object.values(Chart.instances).forEach((chart) => chart.destroy());
+    };
+  }, []);
 
   const options = {
     responsive: true,

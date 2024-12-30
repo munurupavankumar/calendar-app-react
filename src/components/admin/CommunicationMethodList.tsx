@@ -1,10 +1,11 @@
 import React from 'react';
+import { CommunicationMethod } from '../../types/communication';
 
 const CommunicationMethodList = ({
   methods,
   onDelete,
 }: {
-  methods: { id: number; name: string }[];
+  methods: CommunicationMethod[];
   onDelete: (id: number) => void;
 }) => {
   return (
