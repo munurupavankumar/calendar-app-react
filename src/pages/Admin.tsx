@@ -1,44 +1,36 @@
-import React, { useState } from 'react';
-import useCompanies from '../hooks/useCompanies';
-import useCommunications from '../hooks/useCommunications';
-import CompanyForm from '../components/admin/CompanyForm';
-import CompanyList from '../components/admin/CompanyList';
-import CommunicationMethodForm from '../components/admin/CommunicationMethodForm';
-import CommunicationMethodList from '../components/admin/CommunicationMethodList';
-import Notification from '../components/common/Notification';
+// pages/admin/index.tsx
+import CompanyManagement from '../components/admin/CompanyManagement';
+import CommunicationMethodManagement from '../components/admin/CommunicationMethodManagement';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+import { Card, CardContent } from '../components/ui/card';
 
 const Admin = () => {
-  const { companies, addCompany, deleteCompany } = useCompanies();
-  const { methods, addMethod, deleteMethod } = useCommunications();
-  const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
-
-  const handleAddCompany = (company: { name: string }) => {
-    addCompany(company.name);
-    setNotification({ message: 'Company added successfully!', type: 'success' });
-  };
-
-  const handleDeleteCompany = (id: number) => {
-    deleteCompany(id);
-    setNotification({ message: 'Company deleted successfully!', type: 'success' });
-  };
-
-  const handleAddMethod = (method: { name: string }) => {
-    addMethod(method.name);
-    setNotification({ message: 'Communication method added successfully!', type: 'success' });
-  };
-
-  const handleDeleteMethod = (id: number) => {
-    deleteMethod(id);
-    setNotification({ message: 'Communication method deleted successfully!', type: 'success' });
-  };
-
   return (
-    <div className="space-y-6">
-      {notification && <Notification message={notification.message} type={notification.type} onClose={() => setNotification(null)} />}
-      <CompanyForm onSubmit={handleAddCompany} />
-      <CompanyList companies={companies} onDelete={handleDeleteCompany} />
-      <CommunicationMethodForm onSubmit={handleAddMethod} />
-      <CommunicationMethodList methods={methods} onDelete={handleDeleteMethod} />
+    <div className="container mx-auto py-6 space-y-6">
+      <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+      
+      <Tabs defaultValue="companies" className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="companies">Company Management</TabsTrigger>
+          <TabsTrigger value="communications">Communication Methods</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="companies">
+          <Card>
+            <CardContent className="pt-6">
+              <CompanyManagement />
+            </CardContent>
+          </Card>
+        </TabsContent>
+        
+        <TabsContent value="communications">
+          <Card>
+            <CardContent className="pt-6">
+              <CommunicationMethodManagement />
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
