@@ -62,6 +62,18 @@ const DialogTitle = React.forwardRef<
 ));
 DialogTitle.displayName = DialogPrimitive.Title.displayName;
 
+const DialogFooter = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={`flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 ${className}`}
+    {...props}
+  />
+));
+DialogFooter.displayName = 'DialogFooter';
+
 export {
   Dialog,
   DialogTrigger,
@@ -70,4 +82,5 @@ export {
   DialogTitle,
   DialogClose,
   DialogOverlay,
+  DialogFooter,
 };
