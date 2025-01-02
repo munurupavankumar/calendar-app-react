@@ -1,5 +1,4 @@
-import React from 'react';
-import { MessageCircle, Bell, Calendar, Phone, Mail, Clock, Plus } from 'lucide-react';
+import { MessageCircle, Bell, Calendar, Phone, Clock, Plus } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 
 const QuickActions = () => {

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Bell, X, AlertTriangle, Clock } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { notifications } from '../../utils/mockData';

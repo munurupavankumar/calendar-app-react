@@ -1,4 +1,3 @@
-import React from 'react';
 import CommunicationChart from '../components/analytics/CommunicationChart';
 import EngagementMetrics from '../components/analytics/EngagementMetrics';
 import TrendAnalysis from '../components/analytics/TrendAnalysis';

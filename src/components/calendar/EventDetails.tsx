@@ -1,5 +1,3 @@
-import React from 'react';
-
 const EventDetails = ({ event, onClose }: { event: { title: string; date: string } | null; onClose: () => void }) => {
   if (!event) return null; // No event selected
 
